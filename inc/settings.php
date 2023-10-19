@@ -13,8 +13,8 @@ if ( !defined('ABSPATH') )
  */
 function sgtm_settings_menu_item() {
 	add_options_page(
-		__( 'Google Tag Manager', 'sgtm' ), // page title
-		__( 'Google Tag Manager', 'sgtm' ), // menu title
+		__( 'Simple Google Tag Manager', 'sgtm' ), // page title
+		__( 'Simple Google Tag Manager', 'sgtm' ), // menu title
 		'manage_options', // capability
 		'sgtm-settings', // menu slug
 		'sgtm_settings_page' // callback
@@ -61,7 +61,7 @@ function sgtm_settings_page() {
 
 ?>
 <div class="wrap">
-<h1>Stupid simple Google Tag Manager settings</h1>
+<h1>Simple Google Tag Manager settings</h1>
 
 <form method="post" action="options.php">
 	<?php settings_fields( 'sgtm_settings' ); ?>
