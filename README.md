@@ -9,7 +9,7 @@ Your own Google Tag Manager account, as well as its Container ID. It probably lo
 And your theme should follow two particular WordPress standards for this plugin, those standards include two function calls:
 
 - your theme calls `wp_head()` from within the <head> html element.
-- your theme calls `wp_body_open_()` right after the <body> element begins.
+- your theme calls `wp_body_open()` right after the <body> element begins.
 
 ## Set up
 
