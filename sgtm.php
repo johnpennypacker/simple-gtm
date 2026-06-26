@@ -3,7 +3,7 @@
 Plugin Name: Simple Google Tag Manager
 Plugin URI: 
 Description: The simplest Google Tag Manager code inserter
-Version: 0.1
+Version: 0.2
 Author: John Pennypacker
 Author URI: https://pennypacker.net
 */
