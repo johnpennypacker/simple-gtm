@@ -32,7 +32,7 @@ function sgtm_head() {
 <script>
 	// this is the guts of the default anonymous function from the Googz.
 	function initGTM( w, d, s, l, i ) {
-		//console.log( "initGTM", "fired", i );
+		console.log( "initGTM", "fired", i );
 		w[l] = w[l] || [];
 		w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
 		var f = d.getElementsByTagName(s)[0],
@@ -47,8 +47,8 @@ function sgtm_head() {
 		if( TRUE == $defer ) {
 			echo '
 // Monmouth wrote this. works great.
-window.addEventListener("loadtracking", function(event) {
-	initGTM( window, document, "script", "dataLayer", "' . $id . '" );
+window.addEventListener("loadTracking", function(event) {
+	initGTM( window, document, "script", "dataLayer", "' . esc_html( $id ) . '" );
 }, false);
 
 const loadTracking = new Event( "loadTracking" );
@@ -66,8 +66,8 @@ function triggerTrackingScriptLoad() {
 // Parse the query string from the URL
 const trackingURLParams = new URLSearchParams( window.location.search );
 
-// Check if "gtm=nodefer" is in the query string to ensure GTM loading
-if ( "nodefer" === trackingURLParams.get("gtm" ) ) {
+// Check if "sgtm=nodefer" is in the query string to ensure GTM loading
+if ( "nodefer" === trackingURLParams.get( "sgtm" ) ) {
 	window.addEventListener( "load", function( event ) {
 		window.dispatchEvent( loadTracking );
 	});
@@ -79,7 +79,7 @@ if ( "nodefer" === trackingURLParams.get("gtm" ) ) {
 ';
 		} else {
 			echo '
-initGTM( window, document, "script", "dataLayer", "' . $id . '" );';
+initGTM( window, document, "script", "dataLayer", "' . esc_html( $id ) . '" );';
 		}
 		
 		
@@ -100,7 +100,7 @@ function sgtm_body() {
 	$id = sgtm_get_id();
 	if ( $id ) {
 		echo '<!-- Simple Google Tag Manager (noscript) -->
-		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . $id . '"
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' . esc_html( $id ) . '"
 		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<!-- End Simple Google Tag Manager (noscript) -->';
 	}

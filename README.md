@@ -30,7 +30,7 @@ Nothing. Well, nothing meaningful. If this is the case, disable the plugin until
 
 ### What's "defer loading"?
 
-It instructs the browser not to load GTM and everything that comes with it until the user interacts with the page. Interaction could be a click, a key press, a scroll, a window resize, or something else. But if none of that happens, GTM doesn't load.
+It instructs the browser not to load GTM and everything that comes with it until the user interacts with the page. Interaction could be moving the cursor, a click, a key press, or something else. But if none of that happens, GTM doesn't load.
 
 ### What is the benefit of defer loading?
 
@@ -39,4 +39,8 @@ Your Page Speed scores will go up and you will reap all the associated benefits.
 ### Will defer loading affect my analytics stats?
 
 Yes. It'll filter out bots and bounces which will probably lead to a drop in pageviews and sessions. If you're still leaning on those metrics and want to talk through options, email me at johnpennypacker@cosidigital.com, let's talk it through. 
+
+### Can I override defer settings for a particular page?
+
+Yes, you can add sgtm=nodefer to the URL and that'll cause GTM to load when the rest of the page loads regardless of what the user does.
 

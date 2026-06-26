@@ -102,7 +102,7 @@ function sgtm_field_defer() {
 		<input type="checkbox" aria-describedby="sgtm-defer-desc" name="sgtm_defer" id="sgtm-defer" value="1" <?php checked( get_option( 'sgtm_defer', FALSE ) ); ?>>
 		Load Google Tag Manager after the user interacts with the page.
 	</label>
-	<p class="description" id="sgtm-defer-desc">This will reduce your pageviews and other data, but it'll weed out many bots and bounces, and it'll improve your page speed.</p>
+	<p class="description" id="sgtm-defer-desc">This may reduce your pageviews and other data, but it'll weed out many bots and bounces, and it'll improve your page speed.</p>
 	<?php
 }
 
