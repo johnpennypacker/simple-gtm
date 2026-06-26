@@ -36,8 +36,75 @@ function sgtm_settings_init() {
 			'type' => 'string'
 		)
 	);
+	register_setting (
+		'sgtm_settings', // option group
+		'sgtm_defer', // option name
+		array(
+			'sanitize_callback' => 'sgtm_sanitize_checkbox',
+			'show_in_rest' => TRUE,
+			'type' => 'boolean',
+			'default' => FALSE
+		)
+	);
+
+	add_settings_section(
+		'sgtm_settings_section', // section id
+		'', // title (none — the page <h1> is enough)
+		'__return_false', // no intro callback
+		'sgtm_settings' // page slug (matches do_settings_sections)
+	);
+
+	add_settings_field(
+		'sgtm_id', // field id
+		'Container ID', // label (rendered in the <th>)
+		'sgtm_field_id', // render callback
+		'sgtm_settings', // page slug
+		'sgtm_settings_section', // section id
+		array( 'label_for' => 'sgtm-id' )
+	);
+
+	add_settings_field(
+		'sgtm_defer', // field id
+		'Defer loading', // label (rendered in the <th>)
+		'sgtm_field_defer', // render callback
+		'sgtm_settings', // page slug
+		'sgtm_settings_section' // section id
+	);
 }
 add_action( 'admin_init', 'sgtm_settings_init' );
+
+
+/**
+ * Sanitize a checkbox value into a boolean.
+ */
+function sgtm_sanitize_checkbox( $value ) {
+	return ! empty( $value );
+}
+
+
+/**
+ * Render the Container ID field.
+ */
+function sgtm_field_id() {
+	?>
+	<input type="text" class="regular-text" aria-describedby="sgtm-id-desc" name="sgtm_id" id="sgtm-id" value="<?php echo esc_attr( get_option( 'sgtm_id', '' ) ); ?>">
+	<p class="description" id="sgtm-id-desc">Enter your Google Tag Manager Container ID. It should look like GTM-Z3V1L.</p>
+	<?php
+}
+
+
+/**
+ * Render the Defer loading field.
+ */
+function sgtm_field_defer() {
+	?>
+	<label for="sgtm-defer">
+		<input type="checkbox" aria-describedby="sgtm-defer-desc" name="sgtm_defer" id="sgtm-defer" value="1" <?php checked( get_option( 'sgtm_defer', FALSE ) ); ?>>
+		Load Google Tag Manager after the user interacts with the page.
+	</label>
+	<p class="description" id="sgtm-defer-desc">This will reduce your pageviews and other data, but it'll weed out many bots and bounces, and it'll improve your page speed.</p>
+	<?php
+}
 
 
 /**
@@ -66,10 +133,6 @@ function sgtm_settings_page() {
 <form method="post" action="options.php">
 	<?php settings_fields( 'sgtm_settings' ); ?>
 	<?php do_settings_sections( 'sgtm_settings' ); ?>
-	<label><strong>Container ID</strong>
-	<input type="text" class="regular-text" aria-describedby="sgtm-id-desc" name="sgtm_id" id="sgtm-id" value="<?php echo get_option( 'sgtm_id', '' ) ?>">
-	<p class="sgtm-desc">Enter your Google Tag Manager Container ID. It should look like GTM-Z3V1L.</p>
-	</label>
 	<?php submit_button( 'Save Settings' ); ?>
 </form>
 

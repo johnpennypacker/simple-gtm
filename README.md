@@ -4,9 +4,9 @@ In most cases, this'll be all you need to add Google Tag Manger to your WordPres
 
 ## Requirements
 
-Your own Google Tag Manager account, as well as its Container ID. It probably looks like: `GTM-Z3V1L`.
+Your own Google Tag Manager account, as well as its Container ID. It probably looks something like: `GTM-Z3V1L`.
 
-And your theme should follow two particular WordPress standards for this plugin, those standards include two function calls:
+Plus, your theme should follow two particular WordPress standards. Those standards are two function calls:
 
 - your theme calls `wp_head()` from within the <head> html element.
 - your theme calls `wp_body_open()` right after the <body> element begins.
@@ -14,13 +14,29 @@ And your theme should follow two particular WordPress standards for this plugin,
 ## Set up
 
 - Install the plugin.
-- Navigate to Admin -> Settings -> Google Tag Manager and enter your Container ID.
+- Navigate to Admin -> Settings -> Google Tag Manager and enter your Container ID. *Important:* without a Container ID, the plugin does nothing.
+- Optionally choose to defer loading.
 - Hit Save.
 
 ## Validation
 
-Load a WordPress page in your favorite web browser and view the source code. Search the code for Google Tag Manager. Verify that the code snippets include your container ID.
+Load a WordPress page in your favorite web browser and view the source code. Search the code for `Google Tag Manager`. You should find two snippets, and each snippet should include your container ID.
 
 ## Questions
 
-Ask me anything.  
+### What does the plugin do if I activate it but don't enter a Container ID?
+
+Nothing. Well, nothing meaningful. If this is the case, disable the plugin until you're ready to add a Container ID.
+
+### What's "defer loading"?
+
+It instructs the browser not to load GTM and everything that comes with it until the user interacts with the page. Interaction could be a click, a key press, a scroll, a window resize, or something else. But if none of that happens, GTM doesn't load.
+
+### What is the benefit of defer loading?
+
+Your Page Speed scores will go up and you will reap all the associated benefits.
+
+### Will defer loading affect my analytics stats?
+
+Yes. It'll filter out bots and bounces which will probably lead to a drop in pageviews and sessions. If you're still leaning on those metrics and want to talk through options, email me at johnpennypacker@cosidigital.com, let's talk it through. 
+

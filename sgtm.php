@@ -25,15 +25,71 @@ function sgtm_get_id() {
  */
 function sgtm_head() {
 	$id = sgtm_get_id();
+	$defer = get_option( 'sgtm_defer' );
+	
 	if ( $id ) {
-		echo "<!-- Simple Google Tag Manager -->
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','" . $id . "');</script>
-		<!-- End Simple Google Tag Manager -->";
+		echo '<!-- Simple Google Tag Manager -->
+<script>
+	// this is the guts of the default anonymous function from the Googz.
+	function initGTM( w, d, s, l, i ) {
+		//console.log( "initGTM", "fired", i );
+		w[l] = w[l] || [];
+		w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+		var f = d.getElementsByTagName(s)[0],
+			j = d.createElement(s),
+			dl = l != "dataLayer" ? "&l=" + l : "";
+		j.defer = true;
+		j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+		f.parentNode.insertBefore( j, f );
 	}
+';
+
+		if( TRUE == $defer ) {
+			echo '
+// Monmouth wrote this. works great.
+window.addEventListener("loadtracking", function(event) {
+	initGTM( window, document, "script", "dataLayer", "' . $id . '" );
+}, false);
+
+const loadTracking = new Event( "loadTracking" );
+const triggerEvents = [
+	"keydown", "mousedown", "mousemove", "touchmove", "touchstart", "touchend", "wheel", "visibilitychange"
+];
+
+function triggerTrackingScriptLoad() {
+	// remove listeners for future loadTracking events
+	triggerEvents.forEach( event => document.removeEventListener( event, triggerTrackingScriptLoad, false ) );
+	// fire loadTracking event
+	window.dispatchEvent( loadTracking );
+}
+
+// Parse the query string from the URL
+const trackingURLParams = new URLSearchParams( window.location.search );
+
+// Check if "gtm=nodefer" is in the query string to ensure GTM loading
+if ( "nodefer" === trackingURLParams.get("gtm" ) ) {
+	window.addEventListener( "load", function( event ) {
+		window.dispatchEvent( loadTracking );
+	});
+} else {
+	triggerEvents.forEach( event => document.addEventListener( event, triggerTrackingScriptLoad, {
+		passive: true
+	}));
+}
+';
+		} else {
+			echo '
+initGTM( window, document, "script", "dataLayer", "' . $id . '" );';
+		}
+		
+		
+		echo '
+</script>
+<!-- End Simple Google Tag Manager -->
+		';
+
+	}
+
 }
 add_action( 'wp_head', 'sgtm_head', 0 );
 
