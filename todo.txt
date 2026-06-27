@@ -1,5 +1,0 @@
-Rephrase network settings
-
-if prevent is checked, don't show the per site options at all
-
-redo site options screens to reduce extra toggles
